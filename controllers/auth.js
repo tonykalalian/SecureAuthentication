@@ -71,10 +71,15 @@ exports.forgotPassword = async (req, res, next) => {
 
     // HTML Message
     const message = `
-      <h1>You have requested a password reset</h1>
-      <p>Please make a put request to the following link:</p>
-      <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
-    `;
+    <h1 style="font-size: 24px; color: #333;">Password Reset Request</h1>
+    <p style="font-size: 16px; color: #666;">Hello,</p>
+    <p style="font-size: 16px; color: #666;">You have requested a password reset for your TMT-SOLUTIONS account.</p>
+    <p style="font-size: 16px; color: #666;">Please follow the link below to reset your password:</p>
+    <a href="${resetUrl}" style="display: inline-block; background-color: #007BFF; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-size: 16px; margin-top: 10px;">Reset Password</a>
+    <p style="font-size: 16px; color: #666;">If you did not request this password reset, please ignore this email.</p>
+    <p style="font-size: 16px; color: #666;">Thank you,</p>
+    <p style="font-size: 16px; color: #666;">The TMT-SOLUTIONS Team</p>
+  `;
 
     try {
       await sendEmail({
