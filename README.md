@@ -6,8 +6,8 @@ SecureAuth Pro is a robust MERN (MongoDB, Express, React, Node.js) full-stack ap
 
 1. Clone the repository:
 ```
-   git clone <repository_url>
-   cd secureauth-pro
+   git clone https://github.com/tonykalalian/SecureAuthentication.git
+   cd SecureAuthentication
    ```
 2. Install backend dependencies:
 ```
@@ -17,10 +17,15 @@ npm install
 3. Set up environment variables:
 Create a .env file in the backend directory and configure the following variables:
 ```
-PORT=5000
-MONGODB_URI=<your_mongodb_connection_string>
-JWT_SECRET=<your_jwt_secret_key>
-JWT_EXPIRE=<jwt_token_expiry>
+PORT=?
+DB_URI=?
+JWT_SECRET=?
+JWT_EXPIRE=?
+EMAIL_HOST=?
+EMAIL_PORT=?
+EMAIL_USERNAME=?
+EMAIL_PASSWORD=?
+CORS_ORIGIN=View port
 ```
 4. Install frontend dependencies:
 ```
