@@ -33,7 +33,7 @@ EMAIL_HOST=?
 EMAIL_PORT=?
 EMAIL_USERNAME=?
 EMAIL_PASSWORD=?
-CORS_ORIGIN=View port
+CORS_ORIGIN=?
 ```
 4. Install frontend dependencies:
 ```
