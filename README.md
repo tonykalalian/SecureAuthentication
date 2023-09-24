@@ -1,7 +1,15 @@
-# SecureAuth Pro
+# SecureAuthentication
 
-SecureAuth Pro is a robust MERN (MongoDB, Express, React, Node.js) full-stack application that provides advanced authentication features. With focus on security and user experience, SecureAuth Pro offers functionalities like user registration, login, email verification, password reset, and access to private data in a secure and efficient manner. The backend utilizes technologies like JWT (JSON Web Tokens), bcrypt.js for password hashing, Nodemailer for email communication, and mongoose for database interactions. The frontend is built using React to ensure a seamless and intuitive user interface.
+SecureAuthentication is a robust and secure authentication system built using the MERN (MongoDB, Express.js, React, Node.js) stack. This project provides a solid foundation for implementing user authentication and authorization in your web applications. It incorporates best practices for security, scalability, and maintainability.
 
+## Key Features:
+- MERN Stack: Utilizes the power of MongoDB, Express.js, React, and Node.js to create a full-stack authentication solution.
+- JWT Authentication: Implements JSON Web Tokens (JWT) for secure and stateless authentication.
+- Password Hashing: Safely stores user passwords using bcrypt for protection against data breaches.
+- Email Verification: Includes email verification functionality to ensure user authenticity.
+- GitHub Actions Workflow: Automates Docker image builds and deployments, making it easy to deploy updates.
+- Docker Containerization: Enables seamless deployment using Docker containers, ensuring consistency across environments.
+- Render.com Integration: Deploy your backend on Render.com for a hassle-free hosting experience with SSL support.
 ## Installation and Setup
 
 1. Clone the repository:
