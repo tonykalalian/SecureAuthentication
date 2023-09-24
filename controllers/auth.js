@@ -1,8 +1,5 @@
 const crypto = require("crypto");
-const ErrorResponse = require("../utils/errorResponse");
-const User = require("../models/User");
-const sendEmail = require("../utils/sendEmail");
-
+const authService = require("../services/authService");
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -11,17 +8,7 @@ exports.login = async (req, res, next) => {
   }
 
   try {
-    const user = await User.findOne({ email }).select("+password");
-
-    if (!user) {
-      return next(new ErrorResponse("Invalid credentials", 401));
-    }
-
-    const isMatch = await user.matchPassword(password);
-
-    if (!isMatch) {
-      return next(new ErrorResponse("Invalid credentials", 401));
-    }
+    const user = await authService.login(email, password);
 
     sendToken(user, 200, res);
   } catch (err) {
@@ -33,11 +20,7 @@ exports.register = async (req, res, next) => {
   const { username, email, password } = req.body;
 
   try {
-    const user = await User.create({
-      username,
-      email,
-      password,
-    });
+    const user = await authService.register(username, email, password);
 
     sendToken(user, 200, res);
   } catch (err) {
@@ -49,47 +32,9 @@ exports.forgotPassword = async (req, res, next) => {
   const { email } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    await authService.forgotPassword(email);
 
-    if (!user) {
-      return next(new ErrorResponse("No email could not be sent", 404));
-    }
-
-    const resetToken = user.getResetPasswordToken();
-
-    await user.save();
-
-    const resetUrl = `http://localhost:3000/passwordreset/${resetToken}`;
-
-    const message = `
-    <h1 style="font-size: 24px; color: #333;">Password Reset Request</h1>
-    <p style="font-size: 16px; color: #666;">Hello,</p>
-    <p style="font-size: 16px; color: #666;">You have requested a password reset for your TMT-SOLUTIONS account.</p>
-    <p style="font-size: 16px; color: #666;">Please follow the link below to reset your password:</p>
-    <a href="${resetUrl}" style="display: inline-block; background-color: #007BFF; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-size: 16px; margin-top: 10px;">Reset Password</a>
-    <p style="font-size: 16px; color: #666;">If you did not request this password reset, please ignore this email.</p>
-    <p style="font-size: 16px; color: #666;">Thank you,</p>
-    <p style="font-size: 16px; color: #666;">The TMT-SOLUTIONS Team</p>
-  `;
-
-    try {
-      await sendEmail({
-        to: user.email,
-        subject: "Password Reset Request",
-        text: message,
-      });
-
-      res.status(200).json({ success: true, data: "Email Sent" });
-    } catch (err) {
-      console.log(err);
-
-      user.resetPasswordToken = undefined;
-      user.resetPasswordExpire = undefined;
-
-      await user.save();
-
-      return next(new ErrorResponse("Email could not be sent", 500));
-    }
+    res.status(200).json({ success: true, data: "Email Sent" });
   } catch (err) {
     next(err);
   }
@@ -102,20 +47,7 @@ exports.resetPassword = async (req, res, next) => {
     .digest("hex");
 
   try {
-    const user = await User.findOne({
-      resetPasswordToken,
-      resetPasswordExpire: { $gt: Date.now() },
-    });
-
-    if (!user) {
-      return next(new ErrorResponse("Invalid Token", 400));
-    }
-
-    user.password = req.body.password;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpire = undefined;
-
-    await user.save();
+    await authService.resetPassword(resetPasswordToken, req.body.password);
 
     res.status(201).json({
       success: true,
@@ -129,5 +61,5 @@ exports.resetPassword = async (req, res, next) => {
 
 const sendToken = (user, statusCode, res) => {
   const token = user.getSignedJwtToken();
-  res.status(statusCode).json({ sucess: true, token });
+  res.status(statusCode).json({ success: true, token });
 };
