@@ -1,6 +1,6 @@
 # SecureAuthentication
 
-SecureAuthentication is a robust and secure authentication system built using the MERN (MongoDB, Express.js, React, Node.js) stack. This project provides a solid foundation for implementing user authentication and authorization in your web applications. It incorporates best practices for security, scalability, and maintainability.
+SecureAuthentication is a robust and secure authentication system built using MongoDB, Express.js, Node.js. This project provides a solid foundation for implementing user authentication and authorization in your web applications. It incorporates best practices for security, scalability, and maintainability.
 
 ## Key Features:
 - MERN Stack: Utilizes the power of MongoDB, Express.js, React, and Node.js to create a full-stack authentication solution.
